@@ -1,26 +1,19 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+<AppHeader/>
+<div class="w-full flex">
+  <MarvelHeros/>
+</div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import AppHeader from './components/AppHeader.vue';
+import MarvelHeros from './components/MarvelHeros.vue';
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
+    
+    components: { AppHeader, MarvelHeros }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>
