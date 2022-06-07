@@ -12,13 +12,16 @@
 
     <form class="mt-10" @submit.prevent="addHero">
       <input class="border rounded" type="text" v-model="newHero" placeholder="Type hero name here...">
-      <button class="border rounded bg-gradient-to-r from-red-700 to-pink-500 text-sm text-white" type="submit">Add Hero</button>
+      <button class="border rounded p-2 bg-gradient-to-r from-red-700 to-pink-500 text-sm text-white" type="submit">Add Hero</button>
     </form>
   </div>
 </template>
 
 <script>
 export default {
+  setup() {
+
+  },
     computed: {
         herosCount() {
             return this.marvelHeroes.length + " heros.";
@@ -41,7 +44,7 @@ export default {
     methods: {
         addHero() {
             if (this.newHero != "") {
-                this.marvelHeroes.unshift({ name: this.newHero });
+                this.marvelHeroes.push({ name: this.newHero });
                 this.newHero = "";
             }
             else {
