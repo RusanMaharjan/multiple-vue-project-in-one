@@ -2,10 +2,12 @@
   <section class="flex w-full">\
       <div class="m-auto">
           <h1 class="text-2xl text-center">Calculator</h1>
-            <p class="text-3xl text-right h-20 mt-10 w-32 overflow-x-scroll" style="direction: rtl">
+            <p class="text-3xl text-right h-20 mt-10 w-40 overflow-x-scroll" style="direction: rtl">
                 {{ currentNumber }}
             </p>
-            <small>{{ previousNumber }} {{ selectedOperation }} {{ currentNumber }}</small>
+            <div class="h-8">
+                <small v-if="selectedOperation">{{ previousNumber }} {{ selectedOperation }} {{ currentNumber }}</small>
+            </div>
           <div class=" grid grid-cols-4 gap-1">
               <button @click="pressed('1')" class="p-2 w-10 h-10 border rounded shadow">1</button>
               <button @click="pressed('2')" class="p-2 w-10 h-10 border rounded shadow">2</button>
@@ -30,20 +32,22 @@
 
 <script>
 import { ref } from '@vue/reactivity'
+import { onMounted, onUnmounted } from '@vue/runtime-core';
 export default {
     setup() {
         const calculation = ref("");
         const operations = ['+', '-', '*', '/'];
+        const numbers = ['1','2','3','4','5','6','7','8','9','0'];
 
         const currentNumber = ref('');
         const previousNumber = ref('');
         const selectedOperation = ref('');
 
         function pressed(value) {
-            if(value === '=') calculate()
+            if(value === '=' || value === 'Enter') calculate()
             else if (value === 'c') clear()
             else if(operations.includes(value)) applyOperation(value)
-            else appendNumber(value)
+            else if(numbers.includes(value)) appendNumber(value)
         }
 
         function appendNumber(value) {
@@ -51,6 +55,7 @@ export default {
         }
 
         function applyOperation(value) {
+            calculate();
             previousNumber.value = currentNumber.value;
             currentNumber.value = '';
             selectedOperation.value = value;
@@ -86,10 +91,23 @@ export default {
             currentNumber.value = '';
         }
 
+        function handleKeyDown(e) {
+            pressed(e.key)
+            console.log(e.key);
+        }
+
+        onMounted(()=> {
+            window.addEventListener('keydown', handleKeyDown)
+        })
+
+        onUnmounted(()=>{
+            window.removeEventListener('keydown', handleKeyDown);
+        })
+
         return {
             calculation, pressed, operations, clear, calculate, 
             applyOperation, currentNumber, selectedOperation, previousNumber,
-            multiply, divide, sum, subtract
+            multiply, divide, sum, subtract, handleKeyDown
         }
     }
 }
