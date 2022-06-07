@@ -18,43 +18,42 @@
 </template>
 
 <script>
+import { computed, ref } from '@vue/reactivity';
 export default {
   setup() {
+    const newHero= ref("")
+    const marvelHeroes = ref([
+        { name: "Iron Man" },
+        { name: "Ant Man" },
+        { name: "Spider Man" },
+    ]);
 
-  },
-    computed: {
-        herosCount() {
-            return this.marvelHeroes.length + " heros.";
-        },
-    },
-    
-    
-    data() {
-        return {
-            newHero: "Doctor Strange",
-            fname: "Rusan",
-            lname: "Maharjan",
-            marvelHeroes: [
-                { name: "Iron Man" },
-                { name: "Ant Man" },
-                { name: "Spider Man" },
-            ]
-        };
-    },
-    methods: {
-        addHero() {
-            if (this.newHero != "") {
-                this.marvelHeroes.push({ name: this.newHero });
-                this.newHero = "";
-            }
-            else {
-                alert("Input hero name to proceed!!");
-            }
-        },
-        remove(index) {
-            this.marvelHeroes = this.marvelHeroes.filter((hero, i) => i != index);
-        }
-    },
+    //function to remove heros
+    function remove(index) {
+      marvelHeroes.value = marvelHeroes.value.filter((hero, i) => i != index);
+    }
+
+    //function to add hero
+    function addHero() {
+      if (newHero.value != "") {
+          marvelHeroes.value.push({ name: newHero.value });
+          newHero.value = "";
+      }
+      else {
+          alert("Input hero name to proceed!!");
+      }
+    }
+
+    //function to count heros
+    const herosCount = computed({
+      get:()=> marvelHeroes.value.length + " heros."
+    })
+
+    //return values
+    return {
+      marvelHeroes, newHero, remove, addHero, herosCount
+    }
+  }
 }
 </script>
 

@@ -4,6 +4,7 @@ import AboutUs from'./view/AboutUs.vue'
 import Home from'./view/Home'
 import Markdown from'./view/Markdown'
 import Slider from'./view/Slider'
+import Calculator from'./view/Calculator'
 
 const routes = [
     {
@@ -30,6 +31,11 @@ const routes = [
         path: '/slider',
         name: 'Slider',
         component:Slider
+    },
+    {
+        path: '/calculator',
+        name: 'Calculator',
+        component:Calculator
     },
 ]
 const router = createRouter({
